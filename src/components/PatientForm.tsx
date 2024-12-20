@@ -1,7 +1,13 @@
 import { useForm } from "react-hook-form"
+import ErrorMessge from "./ErrorMessge"
 
 export default function PatientForm() {
-    const {register} = useForm()
+    const {register, handleSubmit, formState:{errors}} = useForm()
+    const registerPatient = ()=>{
+        console.log('Nuevo paciente')
+    }
+
+    console.log(errors)
     return (
       <div className="md:w-1/2 lg:w-2/5 mx-5">
           <h2 className="font-black text-3xl text-center">Seguimiento Pacientes</h2>
@@ -14,6 +20,7 @@ export default function PatientForm() {
           <form 
               className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
               noValidate
+              onSubmit={handleSubmit(registerPatient)}
           >
                 <div className="mb-5">
                     <label htmlFor="name" className="text-sm uppercase font-bold">
@@ -25,9 +32,17 @@ export default function PatientForm() {
                         type="text" 
                         placeholder="Nombre del Paciente" 
                         {...register('name',{
-                            required:'El nombre es obligatorio'
+                            required:'El nombre es obligatorio',
+                            maxLength:{
+                                value:8,
+                                message: 'Maximo 8 caracteres'
+                            }
                         })}
                     />
+                    {errors.name &&(
+                        <ErrorMessge>{errors.name?.message as string}</ErrorMessge>
+                    )}
+                    
                 </div>
   
                 <div className="mb-5">
