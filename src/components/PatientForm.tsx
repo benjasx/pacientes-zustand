@@ -1,17 +1,22 @@
 import { useForm } from "react-hook-form";
 import ErrorMessge from "./ErrorMessge";
+import { DraftPatien } from "../types";
+
 
 export default function PatientForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const registerPatient = () => {
-    console.log("Nuevo paciente");
+  } = useForm<DraftPatien>();
+
+
+
+  const registerPatient = (data:DraftPatien) => {
+    console.log(data);
   };
 
-  console.log(errors);
+
   return (
     <div className="md:w-1/2 lg:w-2/5 mx-5">
       <h2 className="font-black text-3xl text-center">Seguimiento Pacientes</h2>
@@ -44,7 +49,7 @@ export default function PatientForm() {
             })}
           />
           {errors.name && (
-            <ErrorMessge>{errors.name?.message as string}</ErrorMessge>
+            <ErrorMessge>{errors.name?.message}</ErrorMessge>
           )}
         </div>
 
@@ -66,7 +71,7 @@ export default function PatientForm() {
             })}
           />
           {errors.caretaker && (
-            <ErrorMessge>{errors.caretaker?.message as string}</ErrorMessge>
+            <ErrorMessge>{errors.caretaker?.message}</ErrorMessge>
           )}
         </div>
 
@@ -88,7 +93,7 @@ export default function PatientForm() {
             })}
           />
           {errors.email && (
-            <ErrorMessge>{errors.email?.message as string}</ErrorMessge>
+            <ErrorMessge>{errors.email?.message}</ErrorMessge>
           )}
         </div>
 
@@ -102,14 +107,11 @@ export default function PatientForm() {
             type="date"
             {...register("date", {
                 required: "La fecha de alta es obligatoria",
-                maxLength: {
-                  value: 8,
-                  message: "Maximo 8 caracteres",
-                },
+                
               })}
             />
             {errors.date && (
-              <ErrorMessge>{errors.date?.message as string}</ErrorMessge>
+              <ErrorMessge>{errors.date?.message}</ErrorMessge>
             )}
        
         </div>
