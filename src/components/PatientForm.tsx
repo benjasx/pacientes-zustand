@@ -1,21 +1,19 @@
 import { useForm } from "react-hook-form";
 import ErrorMessge from "./ErrorMessge";
 import { DraftPatien } from "../types";
-
+import { usePatientStore } from "./store";
 
 export default function PatientForm() {
-  const {
+    const addPatient = usePatientStore(state => state.addPatient)
+    const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<DraftPatien>();
 
-
-
-  const registerPatient = (data:DraftPatien) => {
-    console.log(data);
+  const registerPatient = (data: DraftPatien) => {
+    addPatient(data)
   };
-
 
   return (
     <div className="md:w-1/2 lg:w-2/5 mx-5">
@@ -48,9 +46,7 @@ export default function PatientForm() {
               },
             })}
           />
-          {errors.name && (
-            <ErrorMessge>{errors.name?.message}</ErrorMessge>
-          )}
+          {errors.name && <ErrorMessge>{errors.name?.message}</ErrorMessge>}
         </div>
 
         <div className="mb-5">
@@ -92,9 +88,7 @@ export default function PatientForm() {
               },
             })}
           />
-          {errors.email && (
-            <ErrorMessge>{errors.email?.message}</ErrorMessge>
-          )}
+          {errors.email && <ErrorMessge>{errors.email?.message}</ErrorMessge>}
         </div>
 
         <div className="mb-5">
@@ -106,14 +100,10 @@ export default function PatientForm() {
             className="w-full p-3  border border-gray-100"
             type="date"
             {...register("date", {
-                required: "La fecha de alta es obligatoria",
-                
-              })}
-            />
-            {errors.date && (
-              <ErrorMessge>{errors.date?.message}</ErrorMessge>
-            )}
-       
+              required: "La fecha de alta es obligatoria",
+            })}
+          />
+          {errors.date && <ErrorMessge>{errors.date?.message}</ErrorMessge>}
         </div>
 
         <div className="mb-5">
@@ -125,12 +115,12 @@ export default function PatientForm() {
             className="w-full p-3  border border-gray-100"
             placeholder="Síntomas del paciente"
             {...register("symptoms", {
-                required: "La descripcion es obligatoria",
-              })}
-            />
-            {errors.symptoms && (
-              <ErrorMessge>{errors.symptoms?.message as string}</ErrorMessge>
-            )}
+              required: "La descripcion es obligatoria",
+            })}
+          />
+          {errors.symptoms && (
+            <ErrorMessge>{errors.symptoms?.message as string}</ErrorMessge>
+          )}
         </div>
 
         <input
