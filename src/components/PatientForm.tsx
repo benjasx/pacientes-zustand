@@ -84,10 +84,6 @@ export default function PatientForm() {
             placeholder="Nombre del Propietario"
             {...register("caretaker", {
               required: "El Propietario es obligatorio",
-              maxLength: {
-                value: 8,
-                message: "Maximo 8 caracteres",
-              },
             })}
           />
           {errors.caretaker && (
